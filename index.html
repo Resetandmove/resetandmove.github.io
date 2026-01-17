@@ -1,93 +1,385 @@
-<body>
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Check, ArrowRight, Calendar, Activity, Heart, Shield } from "lucide-react";
+import { motion } from "framer-motion";
 
-<div class="hero">
-  <h1>Reprenez le sport et la vie active avec confiance</h1>
-  <p>Reset & Move est une méthode de coaching conçue pour vous aider à retrouver un corps mobile, fort et serein, afin de profiter pleinement d'une vie en mouvement.</p>
-  <a href="https://www.doctolib.fr/masseur-kinesitherapeute/strasbourg/corentin-meisterlin" class="button" target="_blank">Prendre un rendez-vous</a>
-</div>
+// Animation variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
-<section class="about">
-  <div style="flex:1; min-width:280px;">
-    <h2 style="color:#4a6f62;">Votre coach, votre expert</h2>
-    <p>
-      Je m’appelle <strong>Corentin Meisterlin</strong>, kinésithérapeute et coach.
-      J’ai créé <strong>Reset & Move</strong> pour accompagner celles et ceux qui souhaitent retrouver le plaisir de bouger, reprendre le sport et se sentir à nouveau confiants dans leur corps.
-    </p>
-    <p>
-      Ici, chaque accompagnement est pensé pour construire un corps solide, mobile et fiable,
-      afin de profiter pleinement de la vie, du sport et de toutes les activités du quotidien
-      avec sérénité et énergie.
-    </p>
-  </div>
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
 
-  <div style="flex:1; min-width:260px; text-align:center;">
-    <img src="corentin.jpg" style="max-width:100%; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.15);">
-  </div>
-</section>
+export default function Home() {
+  const doctolibLink = "https://www.doctolib.fr"; // Placeholder, to be replaced by user if needed
 
-<div class="container">
+  return (
+    <div className="min-h-screen flex flex-col font-sans bg-background text-foreground overflow-x-hidden">
+      
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/hero-bg.jpg" 
+            alt="Studio de bien-être lumineux" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-white/30 dark:bg-black/40 backdrop-blur-[2px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background"></div>
+        </div>
 
-  <div class="section">
-    <h2>Est-ce que Reset & Move est fait pour vous ?</h2>
-    <p>
-      Reset & Move s’adresse aux personnes qui veulent reprendre le sport, bouger librement et se sentir à nouveau bien dans leur corps.
-    </p>
+        <div className="container relative z-10 px-4 py-20 text-center md:text-left md:flex md:items-center md:justify-between">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="max-w-2xl"
+          >
+            <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-bold tracking-wider mb-6 border border-primary/20">
+              RESET & MOVE
+            </span>
+            <h1 className="text-5xl md:text-7xl font-serif font-medium leading-tight mb-6 text-balance text-foreground">
+              Reprenez le sport et la vie active avec <span className="italic text-primary">confiance</span>.
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-lg leading-relaxed">
+              Construisez un corps solide, mobile et fiable pour profiter pleinement de la vie. Une méthode de coaching premium pour bouger sans douleur.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="lg" 
+                className="rounded-full text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                asChild
+              >
+                <a href={doctolibLink} target="_blank" rel="noopener noreferrer">
+                  Prendre rendez-vous <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="rounded-full text-lg px-8 py-6 border-primary/20 hover:bg-primary/5 backdrop-blur-sm"
+                onClick={() => document.getElementById('method')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Découvrir la méthode
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-    <div class="card">
-      <p>✔ Vous avez déjà eu des douleurs ou blessures.</p>
-      <p>✔ Vous êtes sportif amateur ou parent actif.</p>
-      <p>✔ Vous voulez un accompagnement sérieux et personnalisé.</p>
+      {/* 2. VOTRE COACH / EXPERT */}
+      <section className="py-24 bg-secondary/30">
+        <div className="container px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl relative z-10">
+                <img 
+                  src="/images/corentin-portrait.jpg" 
+                  alt="Corentin Meisterlin - Coach et Kinésithérapeute" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Decorative element */}
+              <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 bg-primary/10 rounded-2xl -z-0"></div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-serif mb-6">Votre expert du mouvement</h2>
+              <h3 className="text-xl font-medium text-primary mb-6">Corentin Meisterlin — Kinésithérapeute & Coach</h3>
+              <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                <p>
+                  Je ne suis pas juste là pour vous faire transpirer. Mon approche combine l'expertise médicale de la kinésithérapie avec la dynamique du coaching sportif.
+                </p>
+                <p>
+                  Mon objectif est simple : vous redonner la liberté de bouger. Que ce soit après une blessure, une longue pause, ou simplement par envie de prendre soin de vous, je vous accompagne avec une vision long terme.
+                </p>
+                <p>
+                  Pas de "no pain no gain" destructeur ici. Nous construisons de la solidité, de la sécurité et de la confiance.
+                </p>
+              </div>
+              
+              <div className="mt-10 grid grid-cols-2 gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white rounded-full shadow-sm text-primary">
+                    <Shield className="h-6 w-6" />
+                  </div>
+                  <span className="font-medium">Sécurité avant tout</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white rounded-full shadow-sm text-primary">
+                    <Heart className="h-6 w-6" />
+                  </div>
+                  <span className="font-medium">Approche Humaine</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. CIBLAGE - EST-CE POUR VOUS ? */}
+      <section className="py-24 bg-background">
+        <div className="container px-4 max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-5xl font-serif mb-12">Est-ce que Reset & Move est fait pour vous ?</h2>
+          </motion.div>
+
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-6 text-left"
+          >
+            {[
+              "Vous avez des douleurs récurrentes ou d'anciennes blessures.",
+              "Vous souhaitez reprendre le sport mais avez peur de vous faire mal.",
+              "Vous cherchez un accompagnement sérieux, loin des salles de sport bondées.",
+              "Vous voulez investir dans votre santé et votre autonomie sur le long terme."
+            ].map((item, index) => (
+              <motion.div 
+                key={index}
+                variants={fadeIn}
+                className="flex items-start gap-4 p-6 rounded-xl bg-secondary/20 border border-secondary hover:border-primary/30 transition-colors"
+              >
+                <div className="mt-1 bg-primary text-white rounded-full p-1 shrink-0">
+                  <Check className="h-4 w-4" />
+                </div>
+                <p className="text-lg font-medium">{item}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. LA MÉTHODE (3 PILIERS) */}
+      <section id="method" className="py-24 bg-secondary/30">
+        <div className="container px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-primary font-bold tracking-wider uppercase text-sm">Notre Philosophie</span>
+            <h2 className="text-4xl md:text-5xl font-serif mt-3 mb-6">La Méthode Reset & Move</h2>
+            <p className="text-muted-foreground text-lg">Une approche progressive en trois piliers pour reconstruire votre corps durablement.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* RESET */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-background rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-border/50"
+            >
+              <div className="h-48 mb-6 rounded-xl overflow-hidden bg-secondary/50">
+                <img src="/images/reset-icon.jpg" alt="Reset" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <h3 className="text-2xl font-serif mb-3 text-primary">1. Reset</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Rééquilibrer, libérer et restaurer une base saine. Nous identifions les blocages et travaillons sur la mobilité fondamentale pour effacer les tensions.
+              </p>
+            </motion.div>
+
+            {/* MOVE */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-background rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-border/50"
+            >
+              <div className="h-48 mb-6 rounded-xl overflow-hidden bg-secondary/50">
+                <img src="/images/move-icon.jpg" alt="Move" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <h3 className="text-2xl font-serif mb-3 text-primary">2. Move</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Reconstruire les mouvements avec fluidité et contrôle. Réapprendre à bouger correctement pour renforcer les structures sans compensations.
+              </p>
+            </motion.div>
+
+            {/* PERFORM */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-background rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow border border-border/50"
+            >
+              <div className="h-48 mb-6 rounded-xl overflow-hidden bg-secondary/50">
+                <img src="/images/perform-icon.jpg" alt="Perform" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <h3 className="text-2xl font-serif mb-3 text-primary">3. Perform</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Développer force, endurance et confiance durablement. Atteignez vos objectifs sportifs ou de vie avec un corps résilient et énergique.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. VOTRE PARCOURS */}
+      <section className="py-24 bg-background">
+        <div className="container px-4">
+          <h2 className="text-3xl md:text-5xl font-serif text-center mb-16">Votre parcours vers la sérénité</h2>
+          
+          <div className="relative max-w-4xl mx-auto">
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2"></div>
+
+            <div className="space-y-12 md:space-y-24">
+              {/* Step 1 */}
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative flex flex-col md:flex-row items-center gap-8"
+              >
+                <div className="md:w-1/2 md:text-right order-2 md:order-1">
+                  <h3 className="text-2xl font-serif mb-2">1. Évaluation & Compréhension</h3>
+                  <p className="text-muted-foreground">Un bilan complet pour comprendre votre corps, votre histoire et vos objectifs.</p>
+                </div>
+                <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-primary rounded-full border-4 border-background z-10 hidden md:block"></div>
+                <div className="md:w-1/2 order-1 md:order-2 flex justify-center md:justify-start">
+                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-primary font-serif text-2xl font-bold">1</div>
+                </div>
+              </motion.div>
+
+              {/* Step 2 */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative flex flex-col md:flex-row items-center gap-8"
+              >
+                <div className="md:w-1/2 md:text-right order-2 md:order-1 md:hidden">
+                  <h3 className="text-2xl font-serif mb-2">2. Reconstruction Guidée</h3>
+                  <p className="text-muted-foreground">Des séances personnalisées pour progresser étape par étape, en toute sécurité.</p>
+                </div>
+                <div className="md:w-1/2 order-1 flex justify-center md:justify-end">
+                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-primary font-serif text-2xl font-bold">2</div>
+                </div>
+                <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-primary rounded-full border-4 border-background z-10 hidden md:block"></div>
+                <div className="md:w-1/2 order-2 hidden md:block">
+                  <h3 className="text-2xl font-serif mb-2">2. Reconstruction Guidée</h3>
+                  <p className="text-muted-foreground">Des séances personnalisées pour progresser étape par étape, en toute sécurité.</p>
+                </div>
+              </motion.div>
+
+              {/* Step 3 */}
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative flex flex-col md:flex-row items-center gap-8"
+              >
+                <div className="md:w-1/2 md:text-right order-2 md:order-1">
+                  <h3 className="text-2xl font-serif mb-2">3. Autonomie & Performance</h3>
+                  <p className="text-muted-foreground">Vous devenez expert de votre propre corps, capable de bouger librement et durablement.</p>
+                </div>
+                <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-primary rounded-full border-4 border-background z-10 hidden md:block"></div>
+                <div className="md:w-1/2 order-1 md:order-2 flex justify-center md:justify-start">
+                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-primary font-serif text-2xl font-bold">3</div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. FORMATS D'ACCOMPAGNEMENT */}
+      <section className="py-24 bg-secondary/30">
+        <div className="container px-4">
+          <h2 className="text-3xl md:text-5xl font-serif text-center mb-16">Formats d'accompagnement</h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              { title: "Présentiel", icon: <Activity className="w-6 h-6" />, desc: "Séances individuelles au cabinet pour un suivi technique précis et manuel." },
+              { title: "Hybride", icon: <Calendar className="w-6 h-6" />, desc: "Le meilleur des deux mondes : suivi en ligne continu et points réguliers en présentiel." },
+              { title: "100% En Ligne", icon: <Activity className="w-6 h-6" />, desc: "Programmation sur mesure et suivi à distance pour une liberté totale." }
+            ].map((format, i) => (
+              <Card key={i} className="border-none shadow-sm hover:shadow-md transition-all duration-300 bg-background/80 backdrop-blur-sm">
+                <CardContent className="p-8 text-center flex flex-col items-center h-full">
+                  <div className="p-4 bg-secondary rounded-full text-primary mb-6">
+                    {format.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-4">{format.title}</h3>
+                  <p className="text-muted-foreground">{format.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CTA FINAL */}
+      <section className="py-32 bg-primary text-primary-foreground relative overflow-hidden">
+        {/* Abstract shapes background */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-10 left-10 w-64 h-64 rounded-full bg-white blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-white blur-3xl"></div>
+        </div>
+
+        <div className="container px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-4xl md:text-6xl font-serif mb-8">Prêt à bouger librement ?</h2>
+            <p className="text-xl md:text-2xl opacity-90 mb-12 max-w-2xl mx-auto">
+              Faites le premier pas vers un corps plus fort et plus confiant. Réservez votre première séance dès aujourd'hui.
+            </p>
+            <Button 
+              size="lg" 
+              variant="secondary"
+              className="rounded-full text-lg px-10 py-8 shadow-xl hover:scale-105 transition-transform text-primary font-bold"
+              asChild
+            >
+              <a href={doctolibLink} target="_blank" rel="noopener noreferrer">
+                Prendre rendez-vous sur Doctolib
+              </a>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-background py-12 border-t border-border">
+        <div className="container px-4 text-center text-muted-foreground">
+          <p className="font-serif text-lg text-foreground mb-4">Reset & Move</p>
+          <p className="text-sm mb-8">© {new Date().getFullYear()} Corentin Meisterlin. Tous droits réservés.</p>
+          <div className="flex justify-center gap-6 text-sm">
+            <a href="#" className="hover:text-primary transition-colors">Mentions Légales</a>
+            <a href="#" className="hover:text-primary transition-colors">Politique de Confidentialité</a>
+          </div>
+        </div>
+      </footer>
     </div>
-  </div>
-
-  <div class="section">
-    <h2>La méthode Reset & Move</h2>
-
-    <div class="card">
-      <strong>RESET</strong>
-      <p>Nous rééquilibrons votre corps pour créer une base saine et stable.</p>
-    </div>
-
-    <div class="card">
-      <strong>MOVE</strong>
-      <p>Nous reconstruisons vos mouvements avec fluidité et contrôle.</p>
-    </div>
-
-    <div class="card">
-      <strong>PERFORM</strong>
-      <p>Nous développons votre force et votre endurance durablement.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Votre parcours Reset & Move</h2>
-
-    <div class="card">
-      <strong>1. Évaluation</strong>
-      <p>Bilan complet et compréhension de votre situation.</p>
-    </div>
-
-    <div class="card">
-      <strong>2. Reconstruction</strong>
-      <p>Programme personnalisé et accompagnement.</p>
-    </div>
-
-    <div class="card">
-      <strong>3. Autonomie</strong>
-      <p>Vous bougez librement, sans peur ni douleur.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Formats d’accompagnement</h2>
-    <p>Présentiel, hybride ou 100 % en ligne.</p>
-  </div>
-
-  <div class="section">
-    <h2>Prendre rendez-vous</h2>
-    <a href="https://www.doctolib.fr/masseur-kinesitherapeute/strasbourg/corentin-meisterlin" class="button" target="_blank">Réserver sur Doctolib</a>
-  </div>
-
-</div>
-
-</body>
+  );
+}
